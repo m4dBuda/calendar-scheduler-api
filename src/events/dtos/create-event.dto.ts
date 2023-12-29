@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsDateString } from 'class-validator';
+import { IsString, IsOptional, IsBoolean, IsDateString } from 'class-validator';
 
 export class CreateEventDto {
   @IsString()
@@ -7,6 +7,10 @@ export class CreateEventDto {
   @IsString()
   @IsOptional()
   description?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  active?: boolean;
 
   @IsDateString()
   startAt: string;

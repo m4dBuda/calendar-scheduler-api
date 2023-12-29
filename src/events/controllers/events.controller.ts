@@ -27,7 +27,7 @@ export class EventController {
   }
 
   @Get()
-  getEvents(@Query() filterDto: GetEventsFilterDto) {
+  getEvents(@Query() filterDto?: GetEventsFilterDto) {
     return this.eventService.getEvents(filterDto);
   }
 
