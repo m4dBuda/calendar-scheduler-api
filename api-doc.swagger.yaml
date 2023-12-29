@@ -1,0 +1,141 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: Event Management API
+  description: API for managing events and retrieving calendar information
+paths:
+  /events:
+    post:
+      tags:
+        - Events
+      summary: Create a new event
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: event
+          description: The event to create
+          schema:
+            $ref: '#/definitions/Event'
+      responses:
+        201:
+          description: Event created successfully
+        400:
+          description: Invalid input
+    get:
+      tags:
+        - Events
+      summary: Get all events
+      responses:
+        200:
+          description: List of all events
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Event'
+  /events/{id}:
+    get:
+      tags:
+        - Events
+      summary: Get a specific event
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the event to retrieve
+          type: string
+      responses:
+        200:
+          description: Event details
+          schema:
+            $ref: '#/definitions/Event'
+        404:
+          description: Event not found
+    put:
+      tags:
+        - Events
+      summary: Update a specific event
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the event to update
+          type: string
+        - in: body
+          name: event
+          description: The updated event
+          schema:
+            $ref: '#/definitions/Event'
+      responses:
+        200:
+          description: Event updated successfully
+        400:
+          description: Invalid input
+        404:
+          description: Event not found
+    delete:
+      tags:
+        - Events
+      summary: Delete a specific event
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the event to delete
+          type: string
+      responses:
+        200:
+          description: Event deleted successfully
+        404:
+          description: Event not found
+  /calendar:
+    get:
+      tags:
+        - Calendar
+      summary: Get calendar information
+      responses:
+        200:
+          description: Calendar information retrieved successfully
+          schema:
+            $ref: '#/definitions/Calendar'
+definitions:
+  Event:
+    type: object
+    properties:
+      id:
+        type: string
+        description: The unique identifier of the event
+      title:
+        type: string
+        description: The title of the event
+      description:
+        type: string
+        description: The description of the event
+      active:
+        type: boolean
+        description: Whether the event is active or not
+      startAt:
+        type: string
+        format: date-time
+        description: The start date and time of the event
+      endAt:
+        type: string
+        format: date-time
+        description: The end date and time of the event
+      createdAt:
+        type: string
+        format: date-time
+        description: The date and time the event was created
+      updatedAt:
+        type: string
+        format: date-time
+        description: The date and time the event was last updated
+  Calendar:
+    type: object
+    additionalProperties:
+      type: array
+      items:
+        $ref: '#/definitions/Event'
+    description: An object where each key is a date, and each value is an array of events for that date

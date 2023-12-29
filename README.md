@@ -1,73 +1,93 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Calendar Scheduler
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is a NestJS project for managing events and retrieving calendar information.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Prerequisites
 
-## Description
+Before you start, make sure you have Node.js, npm, and PostgreSQL installed on your machine.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Cloning the Project
 
-## Installation
+1. Open the terminal.
+2. Navigate to the directory where you want to clone the project.
+3. Run the following command:
 
 ```bash
-$ npm install
+git clone <URL>
 ```
 
-## Running the app
+## Setting Up the Project
+
+1. Navigate to the project directory:
+
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+cd <dir name>
 ```
 
-## Test
+
+2. Install the project dependencies:
+
 
 ```bash
-# unit tests
-$ npm run test
+npm install
+```
+## Configuring the Database
 
-# e2e tests
-$ npm run test:e2e
+This project uses PostgreSQL as its database. Make sure PostgreSQL is installed and running on your machine.
 
-# test coverage
-$ npm run test:cov
+1. Update the `.env` file at the root of the project with your database information.
+2. Create a new database in PostgreSQL. You can do it manually or use prisma migrate command to do it for you based on prisma.schema.
+
+
+Example of `.env` file:
+
+```bash
+DATABASE_URL=`${DB_DIALECT}://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}`
+
+DB_DIALECT=postgresql
+DB_HOST=localhost
+DB_USERNAME=postgres
+DB_PASSWORD=password
+DB_DATABASE=calendar-db
+DB_PORT=5432
 ```
 
-## Support
+Replace the `.env` variables with their respective values within your PostgreSQL server.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Prisma
 
-## Stay in touch
+This project uses Prisma as its ORM. To generate the database schema, run the following command:
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+npx prisma db push --preview-feature
+```
 
-## License
+This command will create the database schema based on the `schema.prisma` file in the `prisma` folder.
 
-Nest is [MIT licensed](LICENSE).
+To start a web database UI and intect with the database you can also run the following command:
+
+```bash
+npx prisma studio
+```
+This command will start a web server with your database in http://localhost:5555/
+
+
+## Running the Project
+
+To run the project, use the following command:
+
+```bash
+nest start --watch
+```
+
+
+The server should start running on port 3000.
+
+## Accessing the API Documentation
+
+The API documentation is available at the `/docs` route. To access it, open a browser and go to `http://localhost:3000/docs`.
+
+## Making Calls to the API
+
+You can use any HTTP client to make calls to the API. The available routes and methods are documented in the API documentation.
