@@ -3,40 +3,42 @@ import { PrismaClient, Prisma, events } from '@prisma/client';
 import { UpdateEventDto } from '../dtos/update-event.dto';
 import { CreateEventDto } from '../dtos/create-event.dto';
 import { GetEventsFilterDto } from '../dtos/filter-events.dto';
-
 @Injectable()
 export class EventService {
   constructor(private readonly prisma: PrismaClient) {}
 
-  public async createEvent(data: CreateEventDto): Promise<events> {
-    return await this.prisma.events.create({ data });
+  public createEvent(data: CreateEventDto): Promise<events> {
+    return this.prisma.events.create({ data });
   }
 
-  public async getEvents(filterDto: GetEventsFilterDto): Promise<events[]> {
+  public async getEvents(
+    filterDto: GetEventsFilterDto = {},
+  ): Promise<events[]> {
+    const { title, description, startAt, endAt, active } = filterDto;
+
     const where: Prisma.eventsWhereInput = {
       active: true,
     };
-    if (filterDto.title) {
-      where.title = { contains: filterDto.title };
+    if (title) {
+      where.title = { contains: title };
     }
-    if (filterDto.description) {
-      where.description = { contains: filterDto.description };
+    if (description) {
+      where.description = { contains: description };
     }
-    if (filterDto.startAt) {
-      where.startAt = { gte: filterDto.startAt };
+    if (startAt) {
+      where.startAt = { gte: startAt };
     }
-    if (filterDto.endAt) {
-      where.endAt = { lte: filterDto.endAt };
+    if (endAt) {
+      where.endAt = { lte: endAt };
     }
-    if (filterDto.active) {
-      where.active = filterDto.active;
+    if (active) {
+      where.active = active;
     }
-
-    const promise = await this.prisma.events.findMany({ where: where });
-    if (promise.length <= 0) {
+    const events = await this.prisma.events.findMany({ where: where });
+    if (!events) {
       throw new NotFoundException('No events found');
     }
-    return promise;
+    return events;
   }
 
   public async getEventById(id: string): Promise<events> {
@@ -48,18 +50,19 @@ export class EventService {
   }
 
   public async updateEvent(id: string, data: UpdateEventDto): Promise<events> {
-    const event = await this.getEventById(id);
+    data.updatedAt = new Date();
+    const event = await this.prisma.events.update({ where: { id }, data });
     if (!event) {
       throw new NotFoundException(`Event with id ${id} not found`);
     }
-    return await this.prisma.events.update({ where: { id }, data });
+    return event;
   }
 
   public async deleteEvent(id: string): Promise<events> {
-    const event = await this.getEventById(id);
+    const event = await this.prisma.events.delete({ where: { id } });
     if (!event) {
       throw new NotFoundException(`Event with id ${id} not found`);
     }
-    return await this.prisma.events.delete({ where: { id } });
+    return event;
   }
 }
