@@ -1,27 +1,35 @@
-import { Injectable } from '@nestjs/common';
-import { Prisma, PrismaClient } from '@prisma/client';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
+import { EventEntity } from 'src/events/entities/event.entity';
+import { EventsByDayDto } from '../dto/calendar.dto';
 
 @Injectable()
 export class CalendarService {
-  constructor(private $prisma: PrismaClient) {}
+  constructor(private readonly prisma: PrismaClient) {}
 
-  public async createEvent(data: Prisma.calendarCreateInput) {
-    return this.$prisma.calendar.create({ data });
+  public async getEventsByDay(): Promise<EventsByDayDto> {
+    const events: EventEntity[] = await this.prisma.events.findMany();
+    if (!events) {
+      throw new NotFoundException(`No events found`);
+    }
+    return this.groupEventsByDay(events);
   }
 
-  public async getEvents() {
-    return this.$prisma.calendar.findMany();
-  }
+  private groupEventsByDay(events: EventEntity[]): {
+    [key: string]: EventEntity[];
+  } {
+    const eventsByDay: { [key: string]: EventEntity[] } = {};
 
-  public async getEventById(id: string) {
-    return this.$prisma.calendar.findUnique({ where: { id } });
-  }
+    for (const event of events) {
+      const date = event.startAt.toISOString().split('T')[0];
 
-  public async updateEvent(id: string, data: Prisma.calendarUpdateInput) {
-    return this.$prisma.calendar.update({ where: { id }, data });
-  }
+      if (!eventsByDay[date]) {
+        eventsByDay[date] = [];
+      }
 
-  public async deleteEvent(id: string) {
-    return this.$prisma.calendar.delete({ where: { id } });
+      eventsByDay[date].push(event);
+    }
+
+    return eventsByDay;
   }
 }

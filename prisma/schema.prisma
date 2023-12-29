@@ -10,10 +10,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model calendar {
+model events {
   id          String   @id @default(uuid())
-  name        String
+  title       String
   description String?
+  active      Boolean  @default(true)
   startAt     DateTime
   endAt       DateTime
   createdAt   DateTime @default(now())
