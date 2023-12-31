@@ -115,8 +115,8 @@ We will enable GitHub Actions to run unit tests on the main branch, ensuring tha
 ### Database and Application Deployment
 We plan to host our database on Amazon RDS (Relational Database Service) and deploy our application on an EC2 instance in AWS (Amazon Web Services). This will provide us with scalable, reliable, and secure computing resources.
 
-### Front-end Development
-We aim to create a front-end using Angular to provide a calendar management platform. The platform will feature a sidebar with events grouped by date. Users will be able to click on a date to view their scheduled events for that day.
+### Mobile Application Development
+We plan to develop a mobile application using Flutter. This app will serve as a calendar management platform, featuring an intuitive interface where events are grouped by date. Users can select a date to view their scheduled events for that day. This approach ensures a seamless and consistent user experience across both web and mobile platforms.
 
 ### Notification Service
 We plan to implement a notification service to alert users about their scheduled events. Users will have the option to opt out of these notifications. This will likely be implemented as a boolean column in the events table, such as notify_user.
