@@ -100,27 +100,27 @@ The API documentation is available at the `/docs` route. To access it, open a br
 
 You can use any HTTP client to make calls to the API. The available routes and methods are documented in the API documentation.
 
-## Roadmap, Development and Optimizing
+# Roadmap, Development and Optimizing
 In the upcoming steps, we have several goals to improve and optimize our application:
 
-$ Containerization
+### Containerization
 We aim to containerize the application to ensure that it runs consistently across different computing environments.
 
-# User Management System
+### User Management System
 We plan to implement a user management system using JWT (JSON Web Tokens). The JWT validators will ensure that the JWT received can only interact with events that belong to the user ID that generated the current JWT request.
 
-# GitHub Actions
+### GitHub Actions
 We will enable GitHub Actions to run unit tests on the main branch, ensuring that all changes are thoroughly tested before they are merged.
 
-# Database and Application Deployment
+### Database and Application Deployment
 We plan to host our database on Amazon RDS (Relational Database Service) and deploy our application on an EC2 instance in AWS (Amazon Web Services). This will provide us with scalable, reliable, and secure computing resources.
 
-# Front-end Development
+### Front-end Development
 We aim to create a front-end using Angular to provide a calendar management platform. The platform will feature a sidebar with events grouped by date. Users will be able to click on a date to view their scheduled events for that day.
 
-# Notification Service
+### Notification Service
 We plan to implement a notification service to alert users about their scheduled events. Users will have the option to opt out of these notifications. This will likely be implemented as a boolean column in the events table, such as notify_user.
 
-# Author
+### Author
 
 - [João Otávio Carvalho Castejon](https://github.com/m4dBuda)
