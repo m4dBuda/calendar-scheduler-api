@@ -1,4 +1,4 @@
-import { IsString, IsDateString, IsOptional, IsBoolean } from 'class-validator';
+import { IsString, IsDateString, IsOptional } from 'class-validator';
 
 export class UpdateEventDto {
   @IsOptional()
@@ -10,16 +10,12 @@ export class UpdateEventDto {
   description?: string;
 
   @IsOptional()
-  @IsBoolean()
-  active?: boolean;
+  @IsDateString()
+  startAt?: Date;
 
   @IsOptional()
   @IsDateString()
-  startTime?: Date;
-
-  @IsOptional()
-  @IsDateString()
-  endTime?: Date;
+  endAt?: Date;
 
   @IsOptional()
   @IsDateString()

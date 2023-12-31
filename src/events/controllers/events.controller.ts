@@ -27,6 +27,7 @@ export class EventController {
   }
 
   @Get()
+  @UsePipes(new ValidationPipe({ transform: true }))
   getEvents(@Query() filterDto?: GetEventsFilterDto): Promise<EventEntity[]> {
     return this.eventService.getEvents(filterDto);
   }
