@@ -60,7 +60,7 @@ Replace the `.env` variables with their respective values within your PostgreSQL
 This project uses Prisma as its ORM. To generate the database schema, run the following command:
 
 ```bash
-npx prisma db push --preview-feature
+npx prisma db push
 ```
 
 This command will create the database schema based on the `schema.prisma` file in the `prisma` folder.
