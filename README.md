@@ -84,6 +84,14 @@ nest start --watch
 
 The server should start running on port 3000.
 
+## Running tests
+
+To run the project unit tests, use the following command:
+
+```bash
+npm run test
+```
+
 ## Accessing the API Documentation
 
 The API documentation is available at the `/docs` route. To access it, open a browser and go to `http://localhost:3000/docs`.

@@ -9,15 +9,13 @@ export class CalendarService {
 
   public async getEventsByDay(): Promise<EventsByDayDto> {
     const events: EventEntity[] = await this.prisma.events.findMany();
-    if (!events) {
+    if (!events || events.length <= 0) {
       throw new NotFoundException(`No events found`);
     }
     return this.groupEventsByDay(events);
   }
 
-  private groupEventsByDay(events: EventEntity[]): {
-    [key: string]: EventEntity[];
-  } {
+  private groupEventsByDay(events: EventEntity[]): EventsByDayDto {
     const eventsByDay: { [key: string]: EventEntity[] } = {};
 
     for (const event of events) {

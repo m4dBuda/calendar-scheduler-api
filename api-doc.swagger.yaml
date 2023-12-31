@@ -113,9 +113,6 @@ definitions:
       description:
         type: string
         description: The description of the event
-      active:
-        type: boolean
-        description: Whether the event is active or not
       startAt:
         type: string
         format: date-time

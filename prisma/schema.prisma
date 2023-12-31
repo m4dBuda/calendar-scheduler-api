@@ -14,7 +14,6 @@ model events {
   id          String   @id @default(uuid())
   title       String
   description String?
-  active      Boolean  @default(true)
   startAt     DateTime
   endAt       DateTime
   createdAt   DateTime @default(now())
