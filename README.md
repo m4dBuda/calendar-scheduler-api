@@ -36,7 +36,7 @@ npm install
 
 This project uses PostgreSQL as its database. Make sure PostgreSQL is installed and running on your machine.
 
-1. Update the `.env` file at the root of the project with your database information.
+1. Update the `.env` file at the root of the project with your database information and remove the `-example` from its name.
 2. Create a new database in PostgreSQL. You can do it manually or use prisma migrate command to do it for you based on prisma.schema.
 
 
