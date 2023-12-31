@@ -7,6 +7,7 @@ import { PrismaClient, Prisma } from '@prisma/client';
 import { CreateEventDto } from '../dtos/create-event.dto';
 import { GetEventsFilterDto } from '../dtos/filter-events.dto';
 import { EventEntity } from '../entities/event.entity';
+import { UpdateEventDto } from '../dtos/update-event.dto';
 
 @Injectable()
 export class EventService {
@@ -76,7 +77,7 @@ export class EventService {
 
   public async updateEvent(
     id: string,
-    data: Partial<EventEntity>,
+    data: UpdateEventDto,
   ): Promise<EventEntity> {
     const { title, description, startAt, endAt } = data;
 
@@ -111,13 +112,15 @@ export class EventService {
   }
 
   public async deleteEvent(id: string): Promise<EventEntity> {
-    const event = await this.prisma.events.delete({ where: { id } });
+    const existingEvent = await this.prisma.events.findUnique({
+      where: { id },
+    });
 
-    if (!event) {
+    if (!existingEvent) {
       throw new NotFoundException(`Event with id ${id} not found`);
     }
 
-    return event;
+    return await this.prisma.events.delete({ where: { id } });
   }
 
   private async checkEventConflict(
@@ -135,6 +138,5 @@ export class EventService {
         'Another event is already scheduled at this time, please try another time',
       );
     }
-    return;
   }
 }

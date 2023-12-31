@@ -16,8 +16,4 @@ export class UpdateEventDto {
   @IsOptional()
   @IsDateString()
   endAt?: Date;
-
-  @IsOptional()
-  @IsDateString()
-  updatedAt?: Date;
 }

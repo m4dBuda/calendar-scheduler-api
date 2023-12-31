@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   version: '1.0.0'
   title: Event Management API
-  description: API for managing events and retrieving calendar information
+  description: API for managing events
 paths:
   /events:
     post:
@@ -16,7 +16,7 @@ paths:
           name: event
           description: The event to create
           schema:
-            $ref: '#/definitions/Event'
+            $ref: '#/definitions/CreateEventDto'
       responses:
         201:
           description: Event created successfully
@@ -26,48 +26,70 @@ paths:
       tags:
         - Events
       summary: Get all events
+      parameters:
+        - in: query
+          name: title
+          type: string
+          description: Filter events by title
+        - in: query
+          name: description
+          type: string
+          description: Filter events by description
+        - in: query
+          name: startAt
+          type: string
+          format: date-time
+          description: Filter events by start date
+        - in: query
+          name: endAt
+          type: string
+          format: date-time
+          description: Filter events by end date
+        - in: query
+          name: createdAt
+          type: string
+          format: date-time
+          description: Filter events by creation date
       responses:
         200:
-          description: List of all events
+          description: A list of events
           schema:
             type: array
             items:
-              $ref: '#/definitions/Event'
+              $ref: '#/definitions/EventEntity'
   /events/{id}:
     get:
       tags:
         - Events
-      summary: Get a specific event
+      summary: Get an event by id
       parameters:
         - in: path
           name: id
-          required: true
-          description: The id of the event to retrieve
           type: string
+          required: true
+          description: The id of the event
       responses:
         200:
-          description: Event details
+          description: An event
           schema:
-            $ref: '#/definitions/Event'
+            $ref: '#/definitions/EventEntity'
         404:
           description: Event not found
     put:
       tags:
         - Events
-      summary: Update a specific event
-      consumes:
-        - application/json
+      summary: Update an event
       parameters:
         - in: path
           name: id
-          required: true
-          description: The id of the event to update
           type: string
+          required: true
+          description: The id of the event
         - in: body
           name: event
-          description: The updated event
+          description: The event data to update
           schema:
-            $ref: '#/definitions/Event'
+            $ref: '#/definitions/UpdateEventDto'
       responses:
         200:
           description: Event updated successfully
@@ -78,13 +100,13 @@ paths:
     delete:
       tags:
         - Events
-      summary: Delete a specific event
+      summary: Delete an event
       parameters:
         - in: path
           name: id
-          required: true
-          description: The id of the event to delete
           type: string
+          required: true
+          description: The id of the event
       responses:
         200:
           description: Event deleted successfully
@@ -94,45 +116,67 @@ paths:
     get:
       tags:
         - Calendar
-      summary: Get calendar information
+      summary: Get all events grouped by day
       responses:
         200:
-          description: Calendar information retrieved successfully
+          description: A list of events grouped by day
           schema:
-            $ref: '#/definitions/Calendar'
+            type: object
+            $ref: '#/definitions/EventsByDayDto'
+        404:
+          description: No events found
+          
 definitions:
-  Event:
+  EventsByDayDto:
+   type: object
+   additionalProperties: 
+     type: array
+     items:
+       $ref: '#/definitions/EventEntity'
+  CreateEventDto:
+    type: object
+    properties:
+      title:
+        type: string
+      description:
+        type: string
+      startAt:
+        type: string
+        format: date-time
+      endAt:
+        type: string
+        format: date-time
+  UpdateEventDto:
+    type: object
+    properties:
+      title:
+        type: string
+      description:
+        type: string
+      startAt:
+        type: string
+        format: date-time
+      endAt:
+        type: string
+        format: date-time
+  EventEntity:
     type: object
     properties:
       id:
         type: string
-        description: The unique identifier of the event
       title:
         type: string
-        description: The title of the event
       description:
         type: string
-        description: The description of the event
       startAt:
         type: string
         format: date-time
-        description: The start date and time of the event
       endAt:
         type: string
         format: date-time
-        description: The end date and time of the event
       createdAt:
         type: string
         format: date-time
-        description: The date and time the event was created
       updatedAt:
         type: string
         format: date-time
-        description: The date and time the event was last updated
-  Calendar:
-    type: object
-    additionalProperties:
-      type: array
-      items:
-        $ref: '#/definitions/Event'
-    description: An object where each key is a date, and each value is an array of events for that date
