@@ -22,7 +22,7 @@ git clone https://github.com/m4dBuda/calendar-scheduler-api.git
 
 
 ```bash
-cd <dir name>
+cd calendar-scheduler-api
 ```
 
 
