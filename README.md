@@ -13,7 +13,7 @@ Before you start, make sure you have Node.js, npm, and PostgreSQL installed on y
 3. Run the following command:
 
 ```bash
-git clone <URL>
+git clone [<URL>](https://github.com/m4dBuda/calendar-scheduler-api.git)
 ```
 
 ## Setting Up the Project
