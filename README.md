@@ -72,6 +72,13 @@ npx prisma studio
 ```
 This command will start a web server with your database in http://localhost:5555/
 
+## Running tests
+
+To run the project unit tests, use the following command:
+
+```bash
+npm run test
+```
 
 ## Running the Project
 
@@ -81,16 +88,7 @@ To run the project, use the following command:
 nest start --watch
 ```
 
-
 The server should start running on port 3000.
-
-## Running tests
-
-To run the project unit tests, use the following command:
-
-```bash
-npm run test
-```
 
 ## Accessing the API Documentation
 
